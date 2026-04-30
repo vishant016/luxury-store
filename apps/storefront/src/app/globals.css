@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Storefront design tokens: serif titles via --font-playfair, sans body via --font-geist-sans. */
+
+@theme inline {
+  --color-background: #f9f8f6;
+  --color-foreground: #1a1a1a;
+  --color-cream: #f9f8f6;
+  --color-charcoal: #1a1a1a;
+  --color-gold: #c5a059;
+  --color-ivory: #fefdfb;
+  --color-stone: #e8e4de;
+  --color-muted: #8a8478;
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-playfair);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+}
+
+::selection {
+  background-color: var(--color-charcoal);
+  color: var(--color-cream);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+}
