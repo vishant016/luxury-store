@@ -25,4 +25,4 @@ COPY --from=builder /app /app
 # Medusa listens on 9000 by default; Railway will route to $PORT as well.
 EXPOSE 9000
 
-CMD ["sh", "-c", "npx medusa db:migrate && npm run start"]
+CMD ["sh", "-c", "npm run start"]
