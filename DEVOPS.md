@@ -388,40 +388,99 @@ Railway deploy
 
 ## 8. Image Storage — Cloudflare R2
 
-By default, Medusa stores uploaded images on local disk (`uploads/`), which is **not persistent** on Railway. Configure Cloudflare R2 for production image uploads.
+By default, Medusa stores uploaded images on local disk (`uploads/`), which is **not persistent** on Railway (files are lost on every redeploy). Cloudflare R2 is the recommended production file storage.
 
-### Step 1 — Create R2 bucket
+**R2 free tier:** 10 GB storage · 1M writes · 10M reads/month · **no egress fees**  
+No credit card required to start.
 
-1. Go to [dash.cloudflare.com](https://dash.cloudflare.com) → **R2 Object Storage**
-2. **Create bucket** → name: `luxury-store-uploads`
-3. Inside bucket → **Settings** → **Public access** → enable **R2.dev subdomain**
-4. Copy the public URL (`https://pub-xxxxxxxx.r2.dev`)
+---
 
-### Step 2 — Create R2 API token
+### Step 1 — Create a Cloudflare account
 
-1. R2 dashboard → **Manage R2 API tokens** → **Create API token**
-2. Permissions: **Object Read & Write**
-3. Scope: Specific bucket — `luxury-store-uploads`
-4. Create and save **Access Key ID** and **Secret Access Key**
+If you don't have one: [dash.cloudflare.com/sign-up](https://dash.cloudflare.com/sign-up)  
+A free account is sufficient.
+
+---
+
+### Step 2 — Create R2 bucket
+
+1. In the Cloudflare dashboard left sidebar → click **R2 Object Storage**
+2. Click **"Create bucket"**
+3. Name it: `luxury-store-uploads` → click **"Create bucket"**
+4. Open the bucket → go to **Settings** tab
+5. Scroll to **"Public access"** → click **"Allow Access"** → enable the **R2.dev subdomain**
+6. Copy the public URL shown — it looks like:  
+   `https://pub-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.r2.dev`  
+   *(Save this — it becomes your `S3_FILE_URL`)*
+
+---
 
 ### Step 3 — Get your Cloudflare Account ID
 
-- Top right corner of Cloudflare dashboard → copy **Account ID**
+- In the Cloudflare dashboard, look at the **right sidebar** on any page (or **Overview**)
+- Copy your **Account ID** — a 32-character hex string like `a1b2c3d4e5f6...`
 
-### Step 4 — Add env vars to Railway
+---
 
-| Variable | Value |
-|----------|-------|
-| `S3_BUCKET` | `luxury-store-uploads` |
-| `S3_REGION` | `auto` |
-| `S3_ENDPOINT` | `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` |
-| `S3_ACCESS_KEY_ID` | from Step 2 |
-| `S3_SECRET_ACCESS_KEY` | from Step 2 |
-| `S3_FILE_URL` | `https://pub-xxxxxxxx.r2.dev` |
+### Step 4 — Create an R2 API Token
 
-Railway will auto-redeploy. After that, images uploaded via Medusa Admin will be stored in R2 and served via the R2 public URL.
+> **Important:** Use R2-specific tokens, NOT the general "My Profile → API Tokens".  
+> R2 tokens are S3-compatible and are the only ones that work with `@medusajs/file-s3`.
 
-> R2 free tier: 10 GB storage, 1M writes, 10M reads/month. No egress fees.
+1. In the Cloudflare dashboard → **R2 Object Storage** (left sidebar)
+2. Click **"Manage R2 API Tokens"** button (top right of R2 page)
+3. Click **"Create API Token"**
+4. Fill in:
+   - **Token name**: `luxury-store-medusa` (or anything descriptive)
+   - **Permissions**: `Object Read & Write`
+   - **Bucket scope**: Select **"Specific bucket"** → choose `luxury-store-uploads`
+   - **TTL**: Leave as no expiry (or set a long duration)
+5. Click **"Create API Token"**
+6. You will see — **copy and save both immediately** (shown only once):
+   - **Access Key ID** — looks like: `abc123...`
+   - **Secret Access Key** — looks like: `xyz789...`
+
+---
+
+### Step 5 — Add env vars to Railway
+
+Go to your Railway **backend service → Variables** tab and add:
+
+| Variable | Value | Example |
+|----------|-------|---------|
+| `S3_BUCKET` | Your bucket name | `luxury-store-uploads` |
+| `S3_REGION` | Always `auto` for R2 | `auto` |
+| `S3_ENDPOINT` | `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` | `https://a1b2c3d4.r2.cloudflarestorage.com` |
+| `S3_ACCESS_KEY_ID` | Access Key ID from Step 4 | `abc123...` |
+| `S3_SECRET_ACCESS_KEY` | Secret Access Key from Step 4 | `xyz789...` |
+| `S3_FILE_URL` | Public R2.dev URL from Step 2 | `https://pub-xxxx.r2.dev` |
+
+Save the variables — Railway will auto-redeploy.
+
+---
+
+### Step 6 — Verify it works
+
+1. Open Medusa Admin: `https://luxury-store-production-0f59.up.railway.app/app`
+2. Go to any product → edit → upload an image
+3. After saving, the image URL should start with your R2 public URL:  
+   `https://pub-xxxx.r2.dev/...`  
+   (not `localhost` or `/static/...`)
+
+---
+
+### How the code uses R2
+
+`apps/backend-commerce/medusa-config.ts` automatically switches to S3/R2 when **both** `S3_ACCESS_KEY_ID` and `S3_BUCKET` are set:
+
+```typescript
+const useS3 = Boolean(process.env.S3_ACCESS_KEY_ID && process.env.S3_BUCKET);
+```
+
+- **Without S3 vars** → local disk storage (dev only)
+- **With S3 vars** → Cloudflare R2 (production)
+
+No code changes needed — just set the env vars.
 
 ---
 
