@@ -17,6 +17,14 @@ try {
   }
 } catch {}
 
+// Cloudflare R2 public domain from env (e.g. pub-xxxx.r2.dev or custom domain)
+const r2FileUrl = process.env.NEXT_PUBLIC_R2_FILE_URL ?? "";
+let r2Host: { hostname: string } | null = null;
+try {
+  const u = new URL(r2FileUrl);
+  if (u.hostname) r2Host = { hostname: u.hostname };
+} catch {}
+
 const nextConfig: NextConfig = {
   images: {
     dangerouslyAllowLocalIP: allowLocalMedusa,
@@ -31,6 +39,17 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         pathname: "/**",
       },
+      // R2 public domain — set NEXT_PUBLIC_R2_FILE_URL in Vercel env vars
+      ...(r2Host
+        ? [
+            {
+              protocol: "https" as const,
+              hostname: r2Host.hostname,
+              pathname: "/**",
+            },
+          ]
+        : []),
+      // Railway backend static files
       ...(backendHost
         ? [
             {
