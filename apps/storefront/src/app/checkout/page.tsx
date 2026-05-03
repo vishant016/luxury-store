@@ -148,8 +148,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <section className="py-16 px-6 md:px-12 bg-cream">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative overflow-hidden py-16 px-6 md:px-12">
+      <div className="relative mx-auto max-w-7xl">
         <h1 className="text-3xl font-serif font-normal tracking-tight text-charcoal mb-12">
           Checkout
         </h1>
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
           {/* Left — Form */}
           <div className="lg:col-span-3 flex flex-col gap-10">
             {!customer && (
-              <div className="p-4 border border-stone bg-ivory flex items-center justify-between">
+              <div className="panel-editorial flex items-center justify-between rounded-sm p-4">
                 <p className="text-xs text-muted font-sans">
                   Have an account?{" "}
                   <Link
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="w-full py-4 bg-charcoal text-cream text-[10px] tracking-[0.35em] uppercase font-sans hover:bg-gold transition-colors duration-500"
+              className="btn-editorial-primary"
             >
               Place Demo Order
             </motion.button>

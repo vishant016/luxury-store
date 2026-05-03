@@ -13,11 +13,44 @@
   --color-muted: #8a8478;
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-playfair);
+  --shadow-editorial-sm: 0 1px 0 rgba(26, 26, 26, 0.05),
+    0 18px 42px rgba(26, 26, 26, 0.06);
+  --shadow-editorial-md: 0 1px 0 rgba(26, 26, 26, 0.06),
+    0 26px 56px rgba(26, 26, 26, 0.09);
 }
 
 body {
-  background: var(--color-cream);
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(
+      1100px 880px at 12% -12%,
+      rgba(197, 160, 89, 0.09),
+      transparent 58%
+    ),
+    radial-gradient(
+      900px 720px at 92% 8%,
+      rgba(232, 228, 222, 0.85),
+      transparent 55%
+    ),
+    linear-gradient(180deg, #fdfcfa 0%, #f6f4ef 46%, #f9f8f6 100%);
   color: var(--color-charcoal);
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    opacity: 0.025;
+  }
 }
 
 ::selection {
@@ -29,4 +62,96 @@ h1,
 h2,
 h3 {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Shared utility surfaces — keep commerce chrome cohesive without scattering one-off shadows */
+.card-editorial {
+  border: 1px solid rgba(232, 228, 222, 0.95);
+  background-color: #fffefa;
+  box-shadow: var(--shadow-editorial-sm);
+  transition:
+    border-color 650ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 850ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 900ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.card-editorial:hover {
+  border-color: rgba(197, 160, 89, 0.55);
+  box-shadow: var(--shadow-editorial-md);
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgba(197, 160, 89, 0.85);
+  outline-offset: 3px;
+}
+
+/* Forms — consistent luxury chrome */
+.input-editorial {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  color: var(--color-charcoal);
+  background-color: rgba(255, 254, 250, 0.72);
+  border: 1px solid rgba(232, 228, 222, 0.98);
+  outline: none;
+  transition:
+    border-color 320ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 320ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    background-color 320ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.input-editorial:hover {
+  border-color: rgba(197, 160, 89, 0.35);
+}
+
+.input-editorial:focus {
+  border-color: rgba(197, 160, 89, 0.88);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.14);
+  background-color: rgba(255, 255, 255, 0.92);
+}
+
+.input-editorial--error {
+  border-color: rgba(220, 38, 38, 0.55);
+}
+
+.input-editorial--error:focus {
+  border-color: rgba(185, 28, 28, 0.85);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.btn-editorial-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  background-color: var(--color-charcoal);
+  border: 1px solid rgba(26, 26, 26, 0.06);
+  cursor: pointer;
+  transition:
+    background-color 520ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 520ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 520ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  box-shadow: 0 14px 40px rgba(26, 26, 26, 0.14);
+}
+
+.btn-editorial-primary:hover {
+  background-color: var(--color-gold);
+  box-shadow: 0 18px 48px rgba(26, 26, 26, 0.18);
+}
+
+.panel-editorial {
+  border: 1px solid rgba(232, 228, 222, 0.92);
+  background-color: rgba(255, 254, 250, 0.62);
+  box-shadow: var(--shadow-editorial-sm);
+  backdrop-filter: blur(10px);
 }

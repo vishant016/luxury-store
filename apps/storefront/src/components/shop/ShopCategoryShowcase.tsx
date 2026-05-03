@@ -132,10 +132,14 @@ export default function ShopCategoryShowcase({
   return (
     <section
       aria-label="Shop by category"
-      className="border-b border-stone/35 bg-[#ebe8e4] py-8 md:py-10"
+      className="relative overflow-hidden border-b border-stone/40 bg-[linear-gradient(180deg,#ebe8e4_0%,#e8e4dc_55%,#ece8e2_100%)] py-8 md:py-10"
     >
-      <div className="mx-auto max-w-[min(1480px,96vw)] px-5 md:px-10">
-        <p className="mb-8 font-sans text-[10px] tracking-[0.32em] text-muted uppercase">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_30%,rgba(197,160,89,0.08),transparent_52%),radial-gradient(circle_at_94%_12%,rgba(255,255,255,0.4),transparent_55%)]"
+      />
+      <div className="relative mx-auto max-w-[min(1480px,96vw)] px-5 md:px-10">
+        <p className="mb-8 font-sans text-[10px] tracking-[0.34em] text-muted uppercase">
           {title}
         </p>
 
@@ -145,7 +149,7 @@ export default function ShopCategoryShowcase({
               type="button"
               aria-label="Previous categories"
               onClick={() => scrollByViewport(-1)}
-              className="absolute left-1 top-[32%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-stone/30 bg-[#fcfbf9]/95 text-charcoal shadow-sm backdrop-blur-[1px] transition-colors hover:bg-white sm:flex"
+              className="absolute left-1 top-[32%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-stone/40 bg-white/80 text-charcoal shadow-[0_12px_34px_rgba(26,26,26,0.08)] backdrop-blur-md transition-colors hover:border-gold/45 hover:bg-white sm:flex"
             >
               <ChevronIcon direction="left" />
             </button>
@@ -164,13 +168,13 @@ export default function ShopCategoryShowcase({
                   key={tile.id}
                   href={getTileHref(tile.handle)}
                   scroll={false}
-                  className="group w-[min(42vw,280px)] shrink-0 snap-start rounded-sm outline-none ring-0 ring-offset-0 focus-visible:ring-2 focus-visible:ring-charcoal/20 sm:w-[min(36vw,300px)] md:w-[min(28vw,280px)] lg:w-[min(18vw,260px)]"
+                  className="group w-[min(42vw,280px)] shrink-0 snap-start rounded-sm outline-none ring-0 ring-offset-0 focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#ebe8e4] sm:w-[min(36vw,300px)] md:w-[min(28vw,280px)] lg:w-[min(18vw,260px)]"
                 >
                   <div
-                    className={`rounded-sm border bg-white p-px shadow-sm transition-[border-color,box-shadow] duration-500 ease-out ${
+                    className={`rounded-sm border bg-white/90 p-px shadow-[0_1px_0_rgba(26,26,26,0.04)] backdrop-blur-[1px] transition-[border-color,box-shadow] duration-500 ease-out ${
                       selected
-                        ? "border-charcoal shadow-[0_10px_32px_-4px_rgba(0,0,0,0.16)]"
-                        : "border-stone/[0.18] shadow-[0_1px_0_rgba(0,0,0,0.03)] group-hover:border-stone/[0.45] group-hover:shadow-[0_10px_28px_-6px_rgba(0,0,0,0.08)]"
+                        ? "border-charcoal shadow-[0_16px_42px_-8px_rgba(26,26,26,0.22)] ring-1 ring-gold/35"
+                        : "border-stone/25 shadow-[var(--shadow-editorial-sm)] group-hover:border-gold/35 group-hover:shadow-[var(--shadow-editorial-md)]"
                     }`}
                   >
                     <div className="relative aspect-[4/5] overflow-hidden bg-[#eae6e2]">
@@ -222,7 +226,7 @@ export default function ShopCategoryShowcase({
               type="button"
               aria-label="Next categories"
               onClick={() => scrollByViewport(1)}
-              className="absolute right-1 top-[32%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-stone/30 bg-[#fcfbf9]/95 text-charcoal shadow-sm backdrop-blur-[1px] transition-colors hover:bg-white sm:flex"
+              className="absolute right-1 top-[32%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-stone/40 bg-white/80 text-charcoal shadow-[0_12px_34px_rgba(26,26,26,0.08)] backdrop-blur-md transition-colors hover:border-gold/45 hover:bg-white sm:flex"
             >
               <ChevronIcon direction="right" />
             </button>

@@ -13,6 +13,8 @@ interface ProductCardProps {
   product: Product;
   index?: number;
   staticEntry?: boolean;
+  /** Tighter tile for featured sidebar / dense grids */
+  density?: "default" | "compact";
 }
 
 /**
@@ -22,25 +24,33 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
   staticEntry = false,
+  density = "default",
 }: ProductCardProps) {
   const image = product.images?.[0];
   const lowestPrice = getLowestDisplayPrice(product);
+  const compact = density === "compact";
 
   const inner = (
     <article className="group">
       <Link
         href={`/product/${product.handle}`}
-        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/25 focus-visible:ring-offset-4"
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/55 focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
       >
-        <div className="border border-stone/30 bg-white shadow-[0_1px_0_rgba(0,0,0,0.03)] transition-[border-color,box-shadow] duration-[700ms] ease-in-out group-hover:border-stone/55 group-hover:shadow-[0_8px_28px_rgba(0,0,0,0.05)]">
-          <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f2ed]">
+        <div className="card-editorial">
+          <div
+            className={`relative overflow-hidden bg-[linear-gradient(145deg,#f3efe8_0%,#ebe7df_100%)] ${compact ? "aspect-[3/4]" : "aspect-[4/5]"}`}
+          >
             {image ? (
               <Image
                 src={image.url}
                 alt={product.title}
                 fill
-                className="object-cover object-center transition-[transform,opacity] duration-[1150ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:opacity-[0.93] group-hover:scale-[1.018]"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 22vw"
+                className="object-cover object-center transition-[transform,opacity] duration-[1150ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:opacity-[0.94] group-hover:scale-[1.022]"
+                sizes={
+                  compact
+                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 280px"
+                    : "(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 22vw"
+                }
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center font-sans text-xs text-muted/80">
@@ -50,17 +60,25 @@ export default function ProductCard({
           </div>
         </div>
 
-        <div className="mx-auto mt-7 max-w-[18rem] text-center lg:mx-0 lg:max-w-none lg:text-left">
-          <h3 className="font-serif text-[0.938rem] font-light leading-snug tracking-[0.06em] text-charcoal lg:text-[0.9675rem]">
+        <div
+          className={`mx-auto max-w-[18rem] text-center lg:mx-0 lg:max-w-none lg:text-left ${compact ? "mt-4" : "mt-7"}`}
+        >
+          <h3
+            className={`font-serif font-light leading-snug tracking-[0.06em] text-charcoal ${compact ? "text-[0.875rem] lg:text-[0.9rem]" : "text-[0.938rem] lg:text-[0.9675rem]"}`}
+          >
             {product.title}
           </h3>
 
           {lowestPrice ? (
-            <p className="mt-5 border-t border-stone/30 pt-4 font-sans text-[10px] font-normal tracking-[0.32em] text-muted uppercase">
+            <p
+              className={`border-t border-stone/30 font-sans text-[10px] font-normal tracking-[0.32em] text-muted uppercase ${compact ? "mt-3 pt-3" : "mt-5 pt-4"}`}
+            >
               {formatPrice(lowestPrice.amount, lowestPrice.currency_code)}
             </p>
           ) : (
-            <p className="mt-5 pt-4 font-sans text-[10px] tracking-[0.25em] text-muted/75 uppercase">
+            <p
+              className={`font-sans text-[10px] tracking-[0.25em] text-muted/75 uppercase ${compact ? "mt-3 pt-3" : "mt-5 pt-4"}`}
+            >
               Price on request
             </p>
           )}

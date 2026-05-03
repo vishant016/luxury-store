@@ -150,7 +150,11 @@ export default async function ShopPage({
 
   return (
     <PageTransition>
-      <div className="bg-[#ebe8e4] pb-28 pt-0 md:pb-32">
+      <div className="relative overflow-hidden bg-[linear-gradient(185deg,#ebe8e4_0%,#e7e3dc_52%,#f3efe8_100%)] pb-28 pt-0 md:pb-32">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_24%,rgba(197,160,89,0.10),transparent_55%),radial-gradient(circle_at_88%_10%,rgba(255,255,255,0.45),transparent_58%)]"
+        />
         {!resolvedParent ? (
           <ShopCollectionChrome
             title="The Collection"
@@ -177,7 +181,7 @@ export default async function ShopPage({
           />
         ) : null}
 
-        <section className="mx-auto max-w-[min(1480px,96vw)] px-5 pt-10 md:px-10 md:pt-12 lg:pt-14">
+        <section className="relative mx-auto max-w-[min(1480px,96vw)] px-5 pt-10 md:px-10 md:pt-12 lg:pt-14">
           {invalid ? (
             <div className="border border-stone bg-white/40 px-8 py-16 text-center">
               <p className="font-sans text-sm text-muted">

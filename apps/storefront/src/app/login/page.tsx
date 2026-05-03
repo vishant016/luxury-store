@@ -23,12 +23,12 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="py-24 px-6 bg-cream">
+    <section className="relative overflow-hidden py-24 px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-sm mx-auto"
+        className="panel-editorial mx-auto max-w-sm rounded-sm px-8 py-10 md:px-10 md:py-12"
       >
         <h1 className="text-2xl font-serif font-normal tracking-tight text-charcoal text-center mb-2">
           Sign In
@@ -56,7 +56,7 @@ export default function LoginPage() {
                 setEmail(e.target.value);
                 clearError();
               }}
-              className="w-full px-4 py-3 text-sm bg-transparent border border-stone outline-none focus:border-gold transition-colors duration-300 font-sans"
+              className="input-editorial"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 setPassword(e.target.value);
                 clearError();
               }}
-              className="w-full px-4 py-3 text-sm bg-transparent border border-stone outline-none focus:border-gold transition-colors duration-300 font-sans"
+              className="input-editorial"
             />
           </div>
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-full py-4 mt-2 bg-charcoal text-cream text-[10px] tracking-[0.35em] uppercase font-sans hover:bg-gold transition-colors duration-500 disabled:opacity-50"
+            className="btn-editorial-primary mt-2 disabled:pointer-events-none disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </motion.button>

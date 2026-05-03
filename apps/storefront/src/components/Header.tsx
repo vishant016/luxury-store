@@ -138,7 +138,7 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
         useLightOnHero
           ? "border-b border-transparent bg-transparent"
-          : "border-b border-stone/90 bg-cream shadow-sm backdrop-blur-md"
+          : "border-b border-stone/70 bg-cream/92 shadow-[0_10px_38px_rgba(26,26,26,0.06)] backdrop-blur-xl backdrop-saturate-150"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">

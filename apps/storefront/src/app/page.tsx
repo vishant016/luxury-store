@@ -1,11 +1,11 @@
-import { getProducts } from "@/lib/medusa";
+import { getFeaturedHomeProducts } from "@/lib/medusa";
 import HeroBanner from "@/components/editorial/HeroBanner";
 import PromoFeature from "@/components/editorial/PromoFeature";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import PageTransition from "@/components/PageTransition";
 
 export default async function HomePage() {
-  const products = await getProducts(4);
+  const products = await getFeaturedHomeProducts();
 
   return (
     <PageTransition>
@@ -25,7 +25,7 @@ export default async function HomePage() {
           />
         </section>
 
-        <FeaturedProducts products={products} columns={4} />
+        <FeaturedProducts products={products} />
       </main>
     </PageTransition>
   );

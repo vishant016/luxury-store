@@ -24,7 +24,7 @@ export default function HeroBanner({
   ctaLabel = "Shop the Collection",
 }: HeroBannerProps) {
   return (
-    <section className="relative h-screen min-h-[32rem] flex items-center justify-center overflow-hidden bg-charcoal">
+    <section className="relative z-[2] h-screen min-h-[32rem] flex items-center justify-center overflow-hidden bg-charcoal">
       {/* Video or image background. */}
       {videoSrc ? (
         <video
@@ -44,8 +44,9 @@ export default function HeroBanner({
         />
       )}
 
-      {/* Subtle editorial overlay */}
-      <div className="absolute inset-0 bg-black/42" />
+      {/* Editorial overlay — vignette + restrained warmth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/55 to-black/78" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(197,160,89,0.22),transparent_58%),radial-gradient(circle_at_88%_78%,rgba(255,255,255,0.12),transparent_48%)] mix-blend-soft-light" />
 
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-8 text-center">
         <motion.p
@@ -95,7 +96,7 @@ export default function HeroBanner({
         >
           <Link
             href={ctaHref}
-            className="inline-block border border-white/85 bg-white/5 px-14 py-4 font-sans text-[10px] tracking-[0.38em] text-white uppercase backdrop-blur-[2px] transition-all duration-[650ms] ease-in-out hover:border-white hover:bg-white hover:text-charcoal"
+            className="inline-block border border-white/90 bg-white/[0.06] px-14 py-4 font-sans text-[10px] tracking-[0.38em] text-white uppercase backdrop-blur-md shadow-[0_18px_52px_rgba(0,0,0,0.35)] transition-all duration-[650ms] ease-in-out hover:border-white hover:bg-white hover:text-charcoal hover:shadow-[0_22px_60px_rgba(0,0,0,0.42)]"
           >
             {ctaLabel}
           </Link>

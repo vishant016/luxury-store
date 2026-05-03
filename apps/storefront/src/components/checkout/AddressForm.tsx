@@ -59,11 +59,7 @@ export default function AddressForm({
               type={field.type}
               value={data[field.key]}
               onChange={(e) => handleChange(field.key, e.target.value)}
-              className={`w-full px-4 py-3 text-sm bg-transparent border outline-none transition-colors duration-300 font-sans ${
-                errors[field.key]
-                  ? "border-red-400 focus:border-red-500"
-                  : "border-stone focus:border-gold"
-              }`}
+              className={`input-editorial ${errors[field.key] ? "input-editorial--error" : ""}`}
             />
             {errors[field.key] && (
               <p className="text-xs text-red-500 mt-1 font-sans">

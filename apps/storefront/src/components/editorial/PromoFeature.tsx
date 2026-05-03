@@ -26,7 +26,7 @@ export default function PromoFeature({
   ctaLabel = "Discover",
 }: PromoFeatureProps) {
   const imageBlock = (
-    <div className="relative min-h-[22rem] w-full overflow-hidden bg-stone md:min-h-[28rem] lg:min-h-[32rem]">
+    <div className="relative min-h-[22rem] w-full overflow-hidden bg-stone md:min-h-[28rem] lg:min-h-[32rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
       <Image
         src={imageSrc}
         alt={imageAlt || title}
@@ -35,12 +35,16 @@ export default function PromoFeature({
         sizes="(max-width: 1024px) 100vw, 50vw"
         priority={false}
       />
-      <div className="pointer-events-none absolute inset-0 bg-charcoal/[0.03]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-charcoal/[0.06] via-transparent to-gold/[0.06]" />
     </div>
   );
 
   const textBlock = (
-    <div className="flex flex-col justify-center bg-ivory px-8 py-20 md:px-16 md:py-28 lg:px-20 lg:py-32">
+    <div className="relative flex flex-col justify-center bg-[linear-gradient(145deg,#fffefa_0%,#faf7f1_58%,#f6f2ea_100%)] px-8 py-20 md:px-16 md:py-28 lg:px-20 lg:py-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-10 left-6 hidden w-px bg-gradient-to-b from-transparent via-gold/35 to-transparent lg:block"
+      />
       <p className="font-sans text-[10px] tracking-[0.45em] text-gold uppercase">
         {eyebrow}
       </p>
@@ -53,7 +57,7 @@ export default function PromoFeature({
       <div className="mt-12">
         <Link
           href={ctaHref}
-          className="inline-block border border-charcoal bg-transparent px-10 py-3.5 font-sans text-[10px] tracking-[0.32em] text-charcoal uppercase transition-all duration-[600ms] ease-in-out hover:border-gold hover:bg-charcoal hover:text-cream"
+          className="inline-block border border-charcoal/90 bg-white/35 px-10 py-3.5 font-sans text-[10px] tracking-[0.34em] text-charcoal uppercase backdrop-blur-[2px] transition-all duration-[600ms] ease-in-out hover:border-gold hover:bg-charcoal hover:text-cream hover:shadow-[0_18px_44px_rgba(26,26,26,0.14)]"
         >
           {ctaLabel}
         </Link>

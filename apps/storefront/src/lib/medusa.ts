@@ -209,6 +209,55 @@ export async function getProductByHandle(
   return data.products[0] ?? null;
 }
 
+const FEATURED_HOME_LIMIT = 5;
+
+function parseFeaturedHandlesFromEnv(): string[] | null {
+  const raw = process.env.NEXT_PUBLIC_FEATURED_PRODUCT_HANDLES?.trim();
+  if (!raw) return null;
+  const handles = raw.split(",").map((s) => s.trim()).filter(Boolean);
+  return handles.length ? handles : null;
+}
+
+function dedupeProductsById(products: Product[]): Product[] {
+  const seen = new Set<string>();
+  return products.filter((p) => {
+    if (seen.has(p.id)) return false;
+    seen.add(p.id);
+    return true;
+  });
+}
+
+/**
+ * Homepage featured strip: first product = hero, next four = 2×2 grid.
+ *
+ * Logic:
+ * 1. If `NEXT_PUBLIC_FEATURED_PRODUCT_HANDLES` is set (comma-separated handles),
+ *    fetch those in order (first handle = hero).
+ * 2. Else take up to five published products from the catalogue, preferring rows that include images.
+ */
+export const getFeaturedHomeProducts = cache(async function (): Promise<
+  Product[]
+> {
+  const configured = parseFeaturedHandlesFromEnv();
+
+  if (configured?.length) {
+    const resolved = await Promise.all(
+      configured.map((handle) => getProductByHandle(handle))
+    );
+    const picked = dedupeProductsById(
+      resolved.filter((p): p is Product => p != null)
+    );
+    if (picked.length > 0) {
+      return picked.slice(0, FEATURED_HOME_LIMIT);
+    }
+  }
+
+  const pool = await getProducts(24);
+  const preferred = pool.filter((p) => p.images?.length);
+  const source = preferred.length ? preferred : pool;
+  return source.slice(0, FEATURED_HOME_LIMIT);
+});
+
 /** Price row for the storefront currency, or first currency Medusa returned. */
 export function pickVariantPrice(
   prices: MoneyAmount[] | undefined

@@ -34,9 +34,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${playfair.variable} antialiased`}
     >
-      <body className="min-h-screen flex flex-col bg-cream text-charcoal font-sans">
+      <body className="relative z-[1] min-h-screen flex flex-col bg-transparent text-charcoal font-sans selection:bg-charcoal selection:text-cream">
         <Header />
-        <div className="flex-1 pt-16">{children}</div>
+        <div className="relative z-[1] flex-1 pt-16">{children}</div>
         <Footer />
         <CartDrawer />
       </body>

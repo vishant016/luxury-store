@@ -23,10 +23,14 @@ export default function ShopCollectionChrome({
     "Curated proportions and fibres — photographed for clarity of cut, not spectacle.";
 
   return (
-    <header className="border-b border-stone/35 bg-[#fcfbf9] pb-8 pt-10 text-center md:pb-10 md:pt-12">
+    <header className="relative overflow-hidden border-b border-stone/40 bg-[linear-gradient(180deg,rgba(252,251,247,0.92)_0%,rgba(247,244,238,0.96)_55%,rgba(241,237,230,1)_100%)] pb-8 pt-10 text-center backdrop-blur-[2px] md:pb-10 md:pt-12">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(197,160,89,0.10),transparent_58%),radial-gradient(circle_at_92%_16%,rgba(255,255,255,0.55),transparent_60%)]"
+      />
       <nav
         aria-label="Breadcrumb"
-        className="mb-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-sans text-[10px] tracking-[0.22em] text-muted uppercase"
+        className="relative mb-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-sans text-[10px] tracking-[0.22em] text-muted uppercase"
       >
         <Link
           href="/"
@@ -41,24 +45,24 @@ export default function ShopCollectionChrome({
           Shop
         </Link>
       </nav>
-      <p className="mb-4 font-sans text-[10px] tracking-[0.45em] text-gold uppercase">
+      <p className="relative mb-4 font-sans text-[10px] tracking-[0.48em] text-gold uppercase">
         {eyebrow}
       </p>
-      <h1 className="mx-auto max-w-4xl font-serif text-4xl font-light tracking-[0.02em] text-charcoal md:text-5xl md:leading-[1.1] lg:text-[3.35rem]">
+      <h1 className="relative mx-auto max-w-4xl font-serif text-4xl font-light tracking-[0.02em] text-charcoal md:text-5xl md:leading-[1.1] lg:text-[3.35rem]">
         {title}
       </h1>
       {scopeHint ? (
         <p
-          className="mx-auto mt-5 max-w-lg rounded-sm border border-stone/40 bg-white/80 px-5 py-2.5 font-sans text-[11px] font-medium uppercase leading-snug tracking-[0.12em] text-charcoal shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+          className="relative mx-auto mt-5 max-w-lg rounded-sm border border-stone/45 bg-white/70 px-5 py-2.5 font-sans text-[11px] font-medium uppercase leading-snug tracking-[0.12em] text-charcoal shadow-[0_12px_38px_rgba(26,26,26,0.06)] backdrop-blur-sm"
           role="status"
         >
           {scopeHint}
         </p>
       ) : null}
-      <p className="mx-auto mt-6 max-w-lg font-sans text-sm font-light leading-relaxed text-muted">
+      <p className="relative mx-auto mt-6 max-w-lg font-sans text-sm font-light leading-relaxed text-muted">
         {body}
       </p>
-      <div className="mx-auto mt-7 h-px w-14 bg-charcoal/20" />
+      <div className="relative mx-auto mt-7 h-px w-14 bg-gradient-to-r from-transparent via-charcoal/28 to-transparent" />
     </header>
   );
 }

@@ -63,8 +63,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
   }
 
   return (
-    <section className="bg-[#f5f4f1] px-5 py-12 md:px-10 md:py-16 lg:py-20">
-      <div className="mx-auto max-w-[min(1480px,96vw)]">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#f6f4f0_0%,#f1ece6_46%,#ebe8e2_100%)] px-5 py-12 md:px-10 md:py-16 lg:py-20">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_12%,rgba(197,160,89,0.09),transparent_56%),radial-gradient(circle_at_94%_18%,rgba(255,255,255,0.55),transparent_58%)]"
+      />
+      <div className="relative mx-auto max-w-[min(1480px,96vw)]">
         <nav
           aria-label="Breadcrumb"
           className="mb-10 flex flex-wrap items-center gap-x-3 gap-y-2 font-sans text-[10px] tracking-[0.22em] text-muted uppercase"
@@ -100,8 +104,8 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="flex flex-col gap-4"
         >
-          <div className="border border-stone/30 bg-white p-px shadow-[0_1px_0_rgba(0,0,0,0.04)] shadow-sm">
-          <div className="relative aspect-[4/5] overflow-hidden bg-[#ebe8e4]">
+          <div className="card-editorial overflow-hidden">
+          <div className="relative aspect-[4/5] overflow-hidden bg-[linear-gradient(155deg,#f3efe8_0%,#e9e5dc_100%)]">
             {product.images?.[activeImage] && (
               <Image
                 src={product.images[activeImage].url}
@@ -156,14 +160,14 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </h1>
 
           {price && (
-            <p className="text-lg text-muted mb-8 font-sans">
+            <p className="text-lg text-muted mb-8 font-sans font-light tracking-[0.02em]">
               {formatPrice(price.amount, price.currency_code)}
             </p>
           )}
 
           <div className="w-10 h-px bg-gold mb-8" />
 
-          <p className="text-sm text-muted leading-relaxed mb-10 max-w-md font-sans">
+          <p className="text-sm text-muted leading-relaxed mb-10 max-w-md font-sans font-light">
             {product.description}
           </p>
 
@@ -232,10 +236,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             whileHover={matchedVariant ? { scale: 1.005 } : undefined}
             whileTap={matchedVariant ? { scale: 0.995 } : undefined}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className={`w-full cursor-pointer border border-charcoal py-4 text-[10px] tracking-[0.35em] uppercase font-sans shadow-sm transition-all duration-700 disabled:pointer-events-none disabled:opacity-40 disabled:cursor-not-allowed ${
+            className={`w-full cursor-pointer border py-4 text-[10px] tracking-[0.35em] uppercase font-sans transition-all duration-700 disabled:pointer-events-none disabled:opacity-40 disabled:cursor-not-allowed ${
               added
-                ? "bg-gold text-white border-gold"
-                : "bg-charcoal text-cream hover:bg-charcoal/92"
+                ? "border-gold bg-gold text-white shadow-[0_18px_44px_rgba(197,160,89,0.35)]"
+                : "border-charcoal bg-charcoal text-cream shadow-[0_18px_46px_rgba(26,26,26,0.18)] hover:bg-charcoal/92 hover:shadow-[0_22px_52px_rgba(26,26,26,0.22)]"
             }`}
           >
             {added ? "Added to Bag" : "Add to Bag"}

@@ -26,7 +26,7 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[110] bg-black/40 cursor-pointer"
+            className="fixed inset-0 z-[110] cursor-pointer bg-black/45 backdrop-blur-[3px]"
             onClick={close}
           />
 
@@ -35,11 +35,14 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="fixed top-0 right-0 z-[120] h-full w-full max-w-md flex flex-col bg-cream shadow-2xl"
-
+            className="fixed top-0 right-0 z-[120] flex h-full w-full max-w-md flex-col border-l border-stone/80 bg-[linear-gradient(180deg,#fdfcfa_0%,#f8f5ef_48%,#f4f0e8_100%)] shadow-[0_0_0_1px_rgba(197,160,89,0.08),-28px_0_72px_rgba(26,26,26,0.14)] backdrop-blur-xl"
           >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-gold/30 to-transparent"
+            />
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-stone">
+            <div className="flex items-center justify-between border-b border-stone/70 bg-white/25 px-6 py-5 backdrop-blur-sm">
               <h2 className="text-[10px] tracking-[0.35em] uppercase font-sans font-medium text-charcoal">
                 Your Bag ({items.reduce((s, i) => s + i.quantity, 0)})
               </h2>
@@ -67,7 +70,7 @@ export default function CartDrawer() {
             </div>
 
             {/* Items */}
-            <div className="flex-1 overflow-y-auto px-6 py-6">
+            <div className="relative flex-1 overflow-y-auto px-6 py-6">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <p className="text-sm text-muted mb-2 font-sans">
@@ -86,9 +89,9 @@ export default function CartDrawer() {
                   {items.map((item) => (
                     <li
                       key={item.variantId}
-                      className="flex gap-4 pb-6 border-b border-stone last:border-0"
+                      className="flex gap-4 border-b border-stone/70 pb-6 last:border-0"
                     >
-                      <div className="relative w-20 h-24 flex-shrink-0 bg-stone overflow-hidden">
+                      <div className="relative h-24 w-20 flex-shrink-0 overflow-hidden bg-[linear-gradient(145deg,#ebe8e4_0%,#e3dfd8_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
                         {item.image && (
                           <Image
                             src={item.image}
@@ -180,7 +183,7 @@ export default function CartDrawer() {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-stone px-6 py-5">
+              <div className="border-t border-stone/80 bg-white/30 px-6 py-5 backdrop-blur-sm">
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-[10px] tracking-[0.25em] uppercase text-muted font-sans">
                     Subtotal
@@ -192,7 +195,7 @@ export default function CartDrawer() {
                 <Link
                   href="/checkout"
                   onClick={close}
-                  className="block w-full cursor-pointer py-4 bg-charcoal text-cream text-[10px] tracking-[0.35em] uppercase text-center font-sans hover:bg-gold transition-colors duration-500 mb-3"
+                  className="btn-editorial-primary mb-3 text-center"
                 >
                   Checkout
                 </Link>
